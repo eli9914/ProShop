@@ -6,7 +6,6 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { login } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
-import { red } from 'colors'
 
 const LoginScreen = () => {
   const navigate = useNavigate()
