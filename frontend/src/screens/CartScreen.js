@@ -15,6 +15,8 @@ const CartScreen = () => {
   const qtyParam = searchParams.get('qty')
   const qty =
     qtyParam && qtyParam.endsWith('/') ? Number(qtyParam.slice(0, -1)) : 1
+  const userLogin = useSelector((state) => state.userLogin)
+  const { loading, error, userInfo } = userLogin
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
@@ -31,7 +33,10 @@ const CartScreen = () => {
     dispatch(removeFromCart(id))
   }
   const checkoutHandler = () => {
-    navigate('/login?redirect=shipping')
+    if (userInfo) navigate('/shipping')
+    else {
+      navigate('/login')
+    }
   }
   return (
     <Row>
@@ -52,7 +57,7 @@ const CartScreen = () => {
                   <Col md={3}>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
-                  <Col md={2}>{item.price}</Col>
+                  <Col md={2}>${item.price}</Col>
                   <Col md={2}>
                     <Form.Control
                       as='select'
