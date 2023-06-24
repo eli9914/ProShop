@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { useNavigate, Link, useParams } from 'react-router-dom'
 import {
-  Button,
   Row,
   Col,
   ListGroup,
