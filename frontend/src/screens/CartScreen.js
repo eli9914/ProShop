@@ -16,7 +16,7 @@ const CartScreen = () => {
   const qty =
     qtyParam && qtyParam.endsWith('/') ? Number(qtyParam.slice(0, -1)) : 1
   const userLogin = useSelector((state) => state.userLogin)
-  const { loading, error, userInfo } = userLogin
+  const { userInfo } = userLogin
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)

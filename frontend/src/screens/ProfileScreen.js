@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { redirect, useLocation, useNavigate } from 'react-router-dom'
+import { redirect, useNavigate } from 'react-router-dom'
 import { Table, Form, Button, Row, Col } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
-import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
+// import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 import { listMyOrders } from '../actions/orderActions'
 
 const ProfileScreen = () => {
   const navigate = useNavigate()
-  const location = useLocation()
+  // const location = useLocation()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
