@@ -4,18 +4,39 @@ import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import { useNavigate } from 'react-router-dom'
 import { listUsers, deleteUser } from '../actions/userActions'
+import { USER_LIST_REQUEST } from '../constants/userConstants'
 
 const UserListScreen = () => {
   const dispatch = useDispatch()
+  const Navigate = useNavigate()
   const userList = useSelector((state) => state.userList)
   const { loading, error, users } = userList
 
-  useEffect(() => {
-    dispatch(listUsers())
-  }, [dispatch])
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  const userDelete = useSelector((state) => state.userDelete)
+  const { success: successDelete } = userDelete
+
+  useEffect(
+    () => {
+      if (userInfo && userInfo.isAdmin) {
+        dispatch(listUsers())
+      } else {
+        Navigate('/login')
+      }
+    },
+    [dispatch],
+    successDelete
+  )
   const deleteHandler = (id) => {
-    console.log('delete')
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      dispatch(deleteUser(id))
+      const refresh = () => window.location.reload(true)
+      refresh()
+    }
   }
   return (
     <>
@@ -47,7 +68,11 @@ const UserListScreen = () => {
                   {user.isAdmin ? (
                     <i className='fas fa-check' style={{ color: 'green' }}></i>
                   ) : (
-                    <i className='fas fa-times' style={{ color: 'red' }}></i>
+                    <i
+                      className='fas fa-times'
+                      variant='danger'
+                      style={{ color: 'red' }}
+                    ></i>
                   )}
                 </td>
                 <td>
