@@ -6,7 +6,6 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { useNavigate } from 'react-router-dom'
 import { listUsers, deleteUser } from '../actions/userActions'
-import { USER_LIST_REQUEST } from '../constants/userConstants'
 
 const UserListScreen = () => {
   const dispatch = useDispatch()
@@ -29,7 +28,8 @@ const UserListScreen = () => {
       }
     },
     [dispatch],
-    successDelete
+    successDelete,
+    userInfo
   )
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
