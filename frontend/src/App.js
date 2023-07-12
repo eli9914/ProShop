@@ -18,6 +18,7 @@ import UserListScreen from './screens/UserListScreen'
 import UserEditScreen from './screens/UserEditScreen'
 import ProductListScreen from './screens/productListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
+import OrderListScreen from './screens/OrderListScreen'
 const App = () => {
   return (
     <Router>
@@ -38,6 +39,7 @@ const App = () => {
               element={<ProductEditScreen />}
             />
             <Route path='/admin/user/:id/edit' element={<UserEditScreen />} />
+            <Route path='/admin/orderlist' element={<OrderListScreen />} />
             <Route path='/product/:id' element={<ProductScreen />} />
             <Route path='/cart/:id?' element={<CartScreen />} />
             <Route path='/profile' element={<ProfileScreen />} />
