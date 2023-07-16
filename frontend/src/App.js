@@ -44,7 +44,8 @@ const App = () => {
             <Route path='/product/:id' element={<ProductScreen />} />
             <Route path='/cart/:id?' element={<CartScreen />} />
             <Route path='/profile' element={<ProfileScreen />} />
-            <Route path='/' element={<HomeScreen />} />
+            <Route path='/' element={<HomeScreen />} exact />
+            <Route path='/search/:keyword' element={<HomeScreen />} />
           </Routes>
         </Container>
       </main>
