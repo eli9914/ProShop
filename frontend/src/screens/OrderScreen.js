@@ -7,6 +7,7 @@ import {
   ListGroup,
   Image,
   Card,
+  Button,
   // ListGroupItem,
 } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,22 +15,37 @@ import { useDispatch, useSelector } from 'react-redux'
 // import { saveShippingAddress } from '../actions/cartActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { createOrder, getOrderDetails, payOrder } from '../actions/orderActions'
+import {
+  createOrder,
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from '../actions/orderActions'
 import axios from 'axios'
-import { ORDER_PAY_RESET } from '../constants/orderConstants'
+import {
+  ORDER_PAY_RESET,
+  ORDER_DELIVER_RESET,
+} from '../constants/orderConstants'
 
 const OrderScreen = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [sdkReady, setSdkReady] = useState(false)
+
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
   const orderPay = useSelector((state) => state.orderPay)
   const { loading: loadingPay, success: successPay } = orderPay
 
-  if (!loading) {
+  const orderDeliver = useSelector((state) => state.orderDeliver)
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+
+  if (!loading && order && order.orderItems) {
     //Calculate Prices
     order.itemsPrice = order.orderItems.reduce(
       (acc, item) => acc + item.price * item.qty,
@@ -50,8 +66,9 @@ const OrderScreen = () => {
       document.body.appendChild(script)
     }
     // addPayPalScript()
-    if (!order || successPay) {
+    if (!order || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET })
+      dispatch({ type: ORDER_DELIVER_RESET })
       dispatch(getOrderDetails(id))
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -60,11 +77,14 @@ const OrderScreen = () => {
         setSdkReady(true)
       }
     }
-  }, [dispatch, id, successPay, order])
+  }, [dispatch, id, successPay, order, successDeliver])
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)
     dispatch(payOrder(id), paymentResult)
+  }
+  const deliverHandler = () => {
+    dispatch(deliverOrder(id))
   }
   return loading ? (
     <Loader />
@@ -91,7 +111,7 @@ const OrderScreen = () => {
                 {order.shippingAddress.postalCode} ,
                 {order.shippingAddress.country}
               </p>
-              {order.isDelivered ? (
+              {order.isDeliverd ? (
                 <Message varient='success'>
                   Delivered On {order.deliveredAt}
                 </Message>
@@ -187,6 +207,21 @@ const OrderScreen = () => {
                   )}
                 </ListGroup.Item>
               )}
+              {loadingDeliver && <Loader />}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDeliverd && (
+                  <ListGroup.Item className='d-flex justify-content-center'>
+                    <Button
+                      type='button'
+                      className='btn btn-block'
+                      onClick={deliverHandler}
+                    >
+                      Mark As Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>

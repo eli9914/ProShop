@@ -68,7 +68,7 @@ const OrderListScreen = () => {
                   )}
                 </td>
                 <td>
-                  {order.isDelivered ? (
+                  {order.isDeliverd ? (
                     order.deliveredAt.substring(0, 10)
                   ) : (
                     <i
