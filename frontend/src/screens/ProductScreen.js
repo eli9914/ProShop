@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import {
-  Row,
-  Col,
-  Image,
-  ListGroup,
-  Card,
-  Button,
-  ButtonGroup,
-} from 'react-bootstrap'
+import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Rating from '../components/Rating'
 import {
@@ -77,6 +69,7 @@ const ProductScreen = () => {
           <Row>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid></Image>
+              {console.log(product.image)}
             </Col>
             <Col md={3}>
               <ListGroup variant='flush'>

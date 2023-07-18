@@ -5,8 +5,9 @@ import asyncHandler from 'express-async-handler'
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
+//pageSize - how many products do you want to show in one page
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 10
+  const pageSize = 8
   const page = Number(req.query.pageNumber) || 1
   const keyword = req.query.keyword
     ? {
@@ -58,7 +59,7 @@ const createProduct = asyncHandler(async (req, res) => {
     name: 'Sample name',
     price: 0,
     user: req.user._id,
-    image: `images/sample.jpg`,
+    image: `/images/sample.jpg`,
     brand: 'Sample brand',
     category: 'Sample category',
     countInStock: 0,

@@ -4,7 +4,6 @@ import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions'
 import SearchBox from './SearchBox'
-import { Route } from 'react-router-dom'
 
 const Header = () => {
   const dispatch = useDispatch()

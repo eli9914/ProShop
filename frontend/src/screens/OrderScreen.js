@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { PayPalButton } from 'react-paypal-button-v2'
-import { useNavigate, Link, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import {
   Row,
   Col,
@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import {
-  createOrder,
   getOrderDetails,
   payOrder,
   deliverOrder,
@@ -29,7 +28,6 @@ import {
 
 const OrderScreen = () => {
   const { id } = useParams()
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [sdkReady, setSdkReady] = useState(false)
 

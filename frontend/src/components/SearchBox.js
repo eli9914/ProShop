@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const SearchBox = () => {
   const [keyword, setKeyword] = useState('')
@@ -14,7 +14,7 @@ const SearchBox = () => {
     }
   }
   return (
-    <Form onSubmit={submitHandler} inline>
+    <Form onSubmit={submitHandler} inline='true'>
       <div className='d-flex align-items-center'>
         <Form.Control
           type='text'
